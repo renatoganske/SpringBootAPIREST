@@ -1,7 +1,10 @@
 package com.ganske.forum.controller;
 
+import com.ganske.forum.controller.dto.DetalhesDoTopicoDto;
 import com.ganske.forum.controller.dto.TopicoDto;
+import com.ganske.forum.controller.form.AtualizacaoTopicoForm;
 import com.ganske.forum.controller.form.TopicoForm;
+import com.ganske.forum.modelo.Resposta;
 import com.ganske.forum.modelo.Topico;
 import com.ganske.forum.repository.CursoRepository;
 import com.ganske.forum.repository.TopicoRepository;
@@ -10,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -35,12 +40,26 @@ public class TopicosController {
     }
 
     @PostMapping
-    public ResponseEntity<TopicoDto> cadastrar(@RequestBody TopicoForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
         Topico topico = form.converter(cursoRepository);
         topicoRepository.save(topico);
 
         URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
         return ResponseEntity.created(uri).body(new TopicoDto(topico));
+    }
+
+    @GetMapping("/{id}")
+    public DetalhesDoTopicoDto detalhar(@PathVariable Long id){
+        Topico topico = topicoRepository.getById(id);
+        return new DetalhesDoTopicoDto(topico);
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form){
+        Topico topico = form.atualizar(id, topicoRepository);
+
+        return ResponseEntity.ok(new TopicoDto(topico));
     }
 
 }
