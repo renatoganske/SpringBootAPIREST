@@ -4,11 +4,14 @@ import com.ganske.forum.controller.dto.DetalhesDoTopicoDto;
 import com.ganske.forum.controller.dto.TopicoDto;
 import com.ganske.forum.controller.form.AtualizacaoTopicoForm;
 import com.ganske.forum.controller.form.TopicoForm;
-import com.ganske.forum.modelo.Resposta;
 import com.ganske.forum.modelo.Topico;
 import com.ganske.forum.repository.CursoRepository;
 import com.ganske.forum.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,12 +33,14 @@ public class TopicosController {
     private CursoRepository cursoRepository;
 
     @GetMapping
-    public List<TopicoDto> lista(String nomeCurso) {
+    public Page<TopicoDto> lista(@RequestParam String nomeCurso, @RequestParam int pagina, @RequestParam int qtd) {
+
+        Pageable paginacao = PageRequest.of(pagina, qtd);
         if (nomeCurso == null) {
-            List<Topico> topicos = topicoRepository.findAll();
+            Page<Topico> topicos = topicoRepository.findAll(paginacao);
             return TopicoDto.converter(topicos);
         } else {
-            List<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso);
+            Page<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso, paginacao);
             return TopicoDto.converter(topicos);
         }
     }
