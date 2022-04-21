@@ -1,13 +1,12 @@
 package com.ganske.forum.controller.dto;
 
-import com.ganske.forum.modelo.Resposta;
-import com.ganske.forum.modelo.StatusTopico;
-import com.ganske.forum.modelo.Topico;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.ganske.forum.modelo.StatusTopico;
+import com.ganske.forum.modelo.Topico;
 
 public class DetalhesDoTopicoDto {
 

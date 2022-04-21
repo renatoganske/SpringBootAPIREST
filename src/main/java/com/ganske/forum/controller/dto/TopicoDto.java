@@ -4,7 +4,6 @@ import com.ganske.forum.modelo.Topico;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 public class TopicoDto {
 
