@@ -1,5 +1,13 @@
+//cadastro de topico
 {
     "titulo":"Título de teste",
     "mensagem": "Mensagem de teste",
     "nomeCurso": "Spring Boot"
+}
+
+
+//json para login
+{
+    "email":"aluno@email.com",
+    "senha":"123456"
 }
