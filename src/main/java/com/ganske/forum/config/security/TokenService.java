@@ -26,10 +26,10 @@ public class TokenService {
 		Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
 		
 		return Jwts.builder()
-				.setIssuer("API do FÃ³rum da Alura")
+				.setIssuer("API do Fórum da Alura")
 				.setSubject(logado.getId().toString())
 				.setIssuedAt(hoje)
-				.setExpiration(dataExpiracao)
+				.setExpiration(dataExpiracao) 
 				.signWith(SignatureAlgorithm.HS256, secret)
 				.compact();
 	}

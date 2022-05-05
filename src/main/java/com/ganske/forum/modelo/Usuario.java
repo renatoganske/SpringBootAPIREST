@@ -11,7 +11,8 @@ import java.util.List;
 @Entity
 public class Usuario implements UserDetails {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String email;
